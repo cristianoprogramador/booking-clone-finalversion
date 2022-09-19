@@ -40,8 +40,6 @@ export const getHotel = async (req,res,next) => {
     }
 }
 export const getHotels = async (req,res,next) => {
-    const failed = true
-
     try {
         const hotels = await Hotel.find();
         res.status(200).json(hotels)
