@@ -13,28 +13,12 @@ const Footer = () => {
                 <li className="fListItem">Hotéis</li>
             </ul>
             <ul className="fList">
-                <li className="fListItem">Países</li>
-                <li className="fListItem">Regiões</li>
-                <li className="fListItem">Cidades</li>
-                <li className="fListItem">Distritos</li>
-                <li className="fListItem">Aeroportos</li>
-                <li className="fListItem">Hotéis</li>
-            </ul>
-            <ul className="fList">
-                <li className="fListItem">Países</li>
-                <li className="fListItem">Regiões</li>
-                <li className="fListItem">Cidades</li>
-                <li className="fListItem">Distritos</li>
-                <li className="fListItem">Aeroportos</li>
-                <li className="fListItem">Hotéis</li>
-            </ul>
-            <ul className="fList">
-                <li className="fListItem">Países</li>
-                <li className="fListItem">Regiões</li>
-                <li className="fListItem">Cidades</li>
-                <li className="fListItem">Distritos</li>
-                <li className="fListItem">Aeroportos</li>
-                <li className="fListItem">Hotéis</li>
+                <li className="fListItem">Casas</li>
+                <li className="fListItem">Apartamentos</li>
+                <li className="fListItem">Resortes</li>
+                <li className="fListItem">Vilas</li>
+                <li className="fListItem">Hostels</li>
+                <li className="fListItem">Casa de Hóspedes</li>
             </ul>
         </div>
         <div className="fText">Copyright 2022 Cristiano PS</div>

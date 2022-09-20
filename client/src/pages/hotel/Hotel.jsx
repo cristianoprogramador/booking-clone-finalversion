@@ -7,27 +7,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleArrowLeft, faCircleArrowRight, faCircleXmark, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useState } from 'react'
 import useFetch from '../../hooks/useFetch'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { SearchContext } from '../../context/SearchContext'
+import { AuthContext } from '../../context/AuthContext'
+import Reserve from '../../components/reserve/Reserve'
 
 const Hotel = () => {
-  const location = useLocation()
-  const id = location.pathname.split('/')[2]
-  const [slideNumber, setSlideNumber] = useState(0)
-  const [open, setOpen] = useState(false)
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [slideNumber, setSlideNumber] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
-  const { data, loading, error } = useFetch(`/hotels/find/${id}`)
+  const { data, loading, error } = useFetch(`/hotels/find/${id}`);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const { dates, options } = useContext(SearchContext)
+  const { dates, options } = useContext(SearchContext);
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
-    const timeDiff = Math.abs(date2.getTime() - date1.getTime())
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
     const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
-    return diffDays
+    return diffDays;
   }
 
-  const days = (dayDifference(dates[0].endDate, dates[0].startDate))
+  const days = dayDifference(dates[0].endDate, dates[0].startDate);
 
   const handleOpen = (i) => {
     setSlideNumber(i);
@@ -46,6 +51,13 @@ const Hotel = () => {
     setSlideNumber(newSlideNumber)
   }
 
+  const handleClick = () => {
+    if(user){ 
+      setOpenModal(true)
+    } else{
+      navigate('/login')
+    }
+  }
   return (
     <div>
       <Navbar />
@@ -63,7 +75,6 @@ const Hotel = () => {
             <FontAwesomeIcon icon={faCircleArrowRight} className="arrow" onClick={() => handleMove("r")} />
           </div>}
           <div className="hotelWrapper">
-            <button className='bookNow'>Reserve agora!</button>
             <h1 className="hotelTitle">{data.name}</h1>
             <div className="hotelAddress">
               <FontAwesomeIcon icon={faLocationDot} />
@@ -97,13 +108,15 @@ const Hotel = () => {
                 <h2>
                   <b>R$: {days * data.cheapestPrice * options.room} </b> ({days} noites)
                 </h2>
-                <button>Reserve agora!</button>
+                <button onClick={handleClick}>Reserve agora!</button>
               </div>
             </div>
           </div>
           <MailList />
           <Footer />
-        </div>)}
+        </div>
+        )}
+        {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />}
     </div>
   )
 }
